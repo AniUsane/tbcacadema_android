@@ -14,4 +14,6 @@
     <string name="home_page_title">Home</string>
     <string name="remember_me">Remember me</string>
     <string name="profile">Profile</string>
+    <string name="loading">Loading</string>
+    <string name="home">Home</string>
 </resources>
