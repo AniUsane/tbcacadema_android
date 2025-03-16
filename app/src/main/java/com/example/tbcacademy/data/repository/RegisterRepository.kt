@@ -1,5 +1,6 @@
 package com.example.tbcacademy.data.repository
 
+import com.example.tbcacademy.data.local.datastore.DataStoreManager
 import com.example.tbcacademy.data.remote.HandleHttpRequests
 import com.example.tbcacademy.data.remote.ProfileService
 import com.example.tbcacademy.data.remote.Request
@@ -9,7 +10,8 @@ import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 class RegisterRepository @Inject constructor(
-    private val profileService: ProfileService
+    private val profileService: ProfileService,
+    private val dataStoreManager: DataStoreManager
 ) {
 
     suspend fun register(email: String, password: String): Flow<Resource<Unit>> = flow {
@@ -18,7 +20,10 @@ class RegisterRepository @Inject constructor(
             profileService.register(Request(email, password))
         }
         when (result) {
-            is Resource.Success -> emit(Resource.Success(Unit))
+            is Resource.Success -> {
+                dataStoreManager.saveUserCredentials(email, password)
+                emit(Resource.Success(Unit))
+            }
             is Resource.Error -> emit(Resource.Error(result.errorMessage))
             else -> emit(Resource.Error("Unexpected error"))
         }

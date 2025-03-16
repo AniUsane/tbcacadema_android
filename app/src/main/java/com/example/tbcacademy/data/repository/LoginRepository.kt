@@ -37,4 +37,8 @@ class LoginRepository @Inject constructor(
     }
 
     fun getAuthToken(): Flow<String?> = dataStoreManager.getAuthToken()
+
+    suspend fun saveAuthToken(token: String) {
+        dataStoreManager.saveAuthToken(token)
+    }
 }

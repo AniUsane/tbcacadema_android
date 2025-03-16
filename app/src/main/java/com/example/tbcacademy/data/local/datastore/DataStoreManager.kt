@@ -17,6 +17,7 @@ class DataStoreManager @Inject constructor(
     companion object{
         private val AUTH_TOKEN = stringPreferencesKey("auth_token")
         private val USER_EMAIL = stringPreferencesKey("user_email")
+        private val USER_PASSWORD = stringPreferencesKey("user_password")
     }
 
     suspend fun saveAuthToken(token: String){
@@ -31,9 +32,16 @@ class DataStoreManager @Inject constructor(
         }
     }
 
-    suspend fun saveUserEmail(email: String) {
+    suspend fun saveUserCredentials(email: String, password: String) {
         dataStore.edit { preferences ->
-            preferences[USER_EMAIL]
+            preferences[USER_EMAIL] = email
+            preferences[USER_PASSWORD] = password
+        }
+    }
+
+    fun getUserCredentials(): Flow<Pair<String?, String?>> {
+        return dataStore.data.map { preferences ->
+            Pair(preferences[USER_EMAIL], preferences[USER_PASSWORD])
         }
     }
 
@@ -46,19 +54,6 @@ class DataStoreManager @Inject constructor(
     suspend fun clearAuthData() {
         dataStore.edit { preferences ->
             preferences.remove(AUTH_TOKEN)
-            preferences.remove(USER_EMAIL)
-        }
-    }
-
-    suspend fun saveValue(key: Preferences.Key<String>, value: String){
-        dataStore.edit {preference ->
-            preference[key] = value
-        }
-    }
-
-    fun readValue(key: Preferences.Key<String>): Flow<String> {
-        return dataStore.data.map{
-            it[key] ?: ""
         }
     }
 }

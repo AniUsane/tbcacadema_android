@@ -1,4 +1,4 @@
-package com.example.tbcacademy
+package com.example.tbcacademy.base
 
 import android.os.Bundle
 import android.view.LayoutInflater

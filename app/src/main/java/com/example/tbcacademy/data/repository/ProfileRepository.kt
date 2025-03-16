@@ -1,12 +1,15 @@
 package com.example.tbcacademy.data.repository
 
 import com.example.tbcacademy.data.local.datastore.DataStoreManager
-import com.example.tbcacademy.data.remote.ProfileService
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class ProfileRepository @Inject constructor(
-    private val profileService: ProfileService,
     private val dataStore: DataStoreManager
 ) {
+    fun getUserEmail(): Flow<String?> = dataStore.getUserEmail()
 
+    suspend fun clearSession(){
+        dataStore.clearAuthData()
+    }
 }
