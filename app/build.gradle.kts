@@ -1,7 +1,11 @@
+import org.jetbrains.kotlin.tooling.core.linearClosure
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     kotlin("plugin.serialization") version "2.0.21"
+    id("kotlin-kapt")
+    id("com.google.dagger.hilt.android")
 }
 
 android {
@@ -52,4 +56,11 @@ dependencies {
     implementation(libs.navigation.fragment)
     implementation(libs.navigation.ui)
     implementation(libs.serialization)
+    implementation(libs.okhttp)
+    implementation(libs.retrofit)
+    implementation(libs.retrofit2.kotlinx.serialization.converter)
+    implementation(libs.androidx.datastore.preferences)
+    implementation(libs.androidx.datastore.preferences.rxjava2)
+    implementation(libs.hilt.android)
+    implementation(libs.hilt.android.compiler)
 }

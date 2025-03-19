@@ -3,7 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/">
+    app:startDestination="@id/itemFragment">
 
 
+    <fragment
+        android:id="@+id/itemFragment"
+        android:name="com.example.tbcacademy.presentation.searchPage.ItemFragment"
+        android:label="fragment_item"
+        tools:layout="@layout/fragment_item" />
 </navigation>
