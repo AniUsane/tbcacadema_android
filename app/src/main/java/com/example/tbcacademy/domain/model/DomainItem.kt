@@ -9,9 +9,9 @@ data class DomainItem(
     val depth: Int = 0,
     val nameDe: String,
     val createdAt: String,
-    val bglNumber: Int?,
+    val bglNumber: String?,
     val bglVariant: String?,
-    val orderId: Int,
+    val orderId: Int? = null,
     val main: String?,
     val children: List<DomainItem> = emptyList()
 )

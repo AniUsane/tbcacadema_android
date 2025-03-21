@@ -12,11 +12,11 @@ data class Item (
     val nameDe: String,
     val createdAt: String,
     @SerialName("bgl_number")
-    val bglNumber: Int?,
+    val bglNumber: String?,
     @SerialName("bgl_variant")
     val bglVariant: String?,
     @SerialName("order_id")
-    val orderId: Int,
+    val orderId: Int? = null,
     val main: String?,
     val children: List<Item>
 

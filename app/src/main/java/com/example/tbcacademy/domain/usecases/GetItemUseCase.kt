@@ -1,6 +1,5 @@
 package com.example.tbcacademy.domain.usecases
 
-import com.example.tbcacademy.data.model.Item
 import com.example.tbcacademy.data.model.Resource
 import com.example.tbcacademy.data.model.toDomainItem
 import com.example.tbcacademy.data.repository.ItemRepository
@@ -10,37 +9,31 @@ import javax.inject.Inject
 class GetItemUseCase @Inject constructor(
     private val repository: ItemRepository
 ) {
+
+    //Fetches and processes items from the repository
     suspend fun execute(query: String = ""): List<DomainItem> {
         val response = repository.getItems()
 
         return when (response) {
-            is Resource.Success<*> -> {
-                val allItems = response.data as? List<Item> ?: emptyList()
+            is Resource.Success -> {
+                val allItems = response.data.map{it.toDomainItem()}
+                val flattenedItems = allItems.flatMap { flattenItems(it) }
 
                 val filteredItems = if (query.isBlank()) {
-                    allItems
+                    flattenedItems
                 } else {
-                    allItems.filter { it.name.contains(query, ignoreCase = true) }
+                    flattenedItems.filter { it.name.contains(query, ignoreCase = true) }
                 }
 
-                filteredItems.map { item ->
-                    item.toDomainItem()
-                }
+                filteredItems
             }
 
             else -> emptyList()
         }
     }
 
-    private fun calculateDepth(item: DomainItem, items: List<DomainItem>): Int {
-        var depth = 0
-        var currentItem: DomainItem? = item
-
-        while(currentItem?.parentId != null && depth < 4){
-            currentItem = items.find{it.id == currentItem?.parentId}
-            depth++
-        }
-
-        return depth
+    //Flattens hierarchical data structure into a list
+    private fun flattenItems(item: DomainItem): List<DomainItem> {
+        return listOf(item) + item.children.flatMap { flattenItems(it) }
     }
 }

@@ -2,7 +2,6 @@ package com.example.tbcacademy.data.remote
 
 import com.example.tbcacademy.data.model.Resource
 import retrofit2.HttpException
-import retrofit2.Response
 import java.io.IOException
 
 object HandleHttpRequests {
