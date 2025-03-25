@@ -12,9 +12,7 @@ class GetItemUseCase @Inject constructor(
 
     //Fetches and processes items from the repository
     suspend fun execute(query: String = ""): List<DomainItem> {
-        val response = repository.getItems()
-
-        return when (response) {
+        return when (val response = repository.getItems()) {
             is Resource.Success -> {
                 val allItems = response.data.map{it.toDomainItem()}
                 val flattenedItems = allItems.flatMap { flattenItems(it) }

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "25988393336",
+    "project_id": "tbc-academy-584d4",
+    "storage_bucket": "tbc-academy-584d4.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:25988393336:android:13510b8649026ecc58c08d",
+        "android_client_info": {
+          "package_name": "com.example.tbcacademy"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD8Ee18GhKsHYsBfakDg3TGCdUDFnJ0KxY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

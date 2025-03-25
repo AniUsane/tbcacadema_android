@@ -3,6 +3,8 @@ package com.example.tbcacademy.presentation.searchPage
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
+import android.view.ViewGroup
+import android.widget.Button
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -22,8 +24,15 @@ class ItemFragment : BaseFragment<FragmentItemBinding>(FragmentItemBinding::infl
         setupRecyclerView()
         setupObservers()
         setupSearch()
+        listeners()
 
         viewModel.obtainEvent(ItemEvent.LoadItems(""))
+    }
+
+    private fun listeners(){
+        binding.testBtn.setOnClickListener {
+            throw RuntimeException("Test Crash") // Force a crash
+        }
     }
 
     //Sets up recycler view
