@@ -3,7 +3,25 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/">
+    app:startDestination="@id/uploadImageFragment">
 
 
+    <fragment
+        android:id="@+id/uploadImageFragment"
+        android:name="com.example.tbcacademy.presentation.screen.UploadImageFragment"
+        android:label="fragment_upload_image"
+        tools:layout="@layout/fragment_upload_image" >
+        <action
+            android:id="@+id/action_uploadImageFragment_to_pickImageBottomSheet"
+            app:destination="@id/pickImageBottomSheet" />
+    </fragment>
+    <dialog
+        android:id="@+id/pickImageBottomSheet"
+        android:name="com.example.tbcacademy.presentation.screen.PickImageBottomSheet"
+        android:label="fragment_pick_image_bottom_sheet"
+        tools:layout="@layout/fragment_pick_image_bottom_sheet" >
+        <action
+            android:id="@+id/action_pickImageBottomSheet_to_uploadImageFragment"
+            app:destination="@id/uploadImageFragment" />
+    </dialog>
 </navigation>

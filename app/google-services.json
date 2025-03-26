@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "609632754431",
+    "project_id": "uploadimage-e28f4",
+    "storage_bucket": "uploadimage-e28f4.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:609632754431:android:09072b0f52bcfc795f0aca",
+        "android_client_info": {
+          "package_name": "com.example.tbcacademy"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC1-1Rplo6odEQtZiraUnU3m5rM0H4JrCA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

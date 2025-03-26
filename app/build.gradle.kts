@@ -2,6 +2,10 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     kotlin("plugin.serialization") version "2.0.21"
+    id("kotlin-kapt")
+    id("com.google.dagger.hilt.android")
+    id("com.google.gms.google-services")
+    id("com.google.firebase.crashlytics")
 }
 
 android {
@@ -37,6 +41,9 @@ android {
     buildFeatures{
         viewBinding = true
     }
+    packaging {
+        resources.excludes.add("META-INF/gradle/incremental.annotation.processors")
+    }
 }
 
 dependencies {
@@ -52,4 +59,21 @@ dependencies {
     implementation(libs.navigation.fragment)
     implementation(libs.navigation.ui)
     implementation(libs.serialization)
+
+    implementation(libs.okhttp)
+    implementation(libs.retrofit)
+    implementation(libs.retrofit2.kotlinx.serialization.converter)
+    implementation(libs.hilt.android)
+    implementation(libs.hilt.android.compiler)
+    kapt(libs.hilt.android.compiler)
+
+    implementation(libs.firebase.messaging)
+    implementation(platform("com.google.firebase:firebase-bom:33.11.0"))
+    implementation("com.google.firebase:firebase-analytics")
+    implementation("com.google.firebase:firebase-crashlytics")
+
+}
+
+kapt {
+    correctErrorTypes = true
 }
