@@ -2,12 +2,15 @@ package com.example.tbcacademy
 
 import android.app.Application
 import android.util.Log.d
+import androidx.hilt.work.HiltWorkerFactory
+import androidx.work.Configuration
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.messaging.FirebaseMessaging
 import dagger.hilt.android.HiltAndroidApp
+import javax.inject.Inject
 
 @HiltAndroidApp
-class App: Application(){
+class App: Application(), Configuration.Provider{
     override fun onCreate() {
         super.onCreate()
         setUpMessaging()
@@ -29,4 +32,12 @@ class App: Application(){
     companion object{
         const val FIREBASE_MESSAGING_TAG = "FIREBASE MESSAGING TAG"
     }
+
+    @Inject
+    lateinit var workerFactory: HiltWorkerFactory
+
+    override val workManagerConfiguration: Configuration
+        get() = Configuration.Builder()
+            .setWorkerFactory(workerFactory)
+            .build()
 }
