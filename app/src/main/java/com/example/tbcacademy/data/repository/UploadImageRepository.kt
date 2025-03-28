@@ -5,16 +5,24 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.WorkManager
+import androidx.work.workDataOf
+import com.example.tbcacademy.domain.usecase.UploadImageToFirebaseUseCase
 import com.example.tbcacademy.domain.usecase.UploadImageUseCase
+import com.example.tbcacademy.presentation.screen.UploadImageWorker
+import com.google.android.datatransport.runtime.logging.Logging.d
 import java.io.ByteArrayOutputStream
+import java.io.File
 import java.io.InputStream
+import java.util.UUID
 import javax.inject.Inject
 
 class UploadImageRepository @Inject constructor(
     private val uploadImageUseCase: UploadImageUseCase,
+    private val uploadImageToFirebaseUseCase: UploadImageToFirebaseUseCase,
     private val context: Context
 ) {
-
     //gets and compresses captured image
     fun getCameraImage(data: Intent?): Bitmap? {
         val bitmap = uploadImageUseCase.handleCameraResult(data)
@@ -44,5 +52,25 @@ class UploadImageRepository @Inject constructor(
         bitmap.compress(Bitmap.CompressFormat.JPEG, 80, outputStream)
         val byteArray = outputStream.toByteArray()
         return BitmapFactory.decodeByteArray(byteArray, 0, byteArray.size)
+    }
+
+    //saves bitmap in a file and schedules upload with work manager
+    fun uploadImageWithWorker(bitmap: Bitmap): UUID {
+        val file = File(context.cacheDir, "upload_${System.currentTimeMillis()}.jpg")
+        file.outputStream().use { out ->
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 80, out)
+        }
+
+        val data = workDataOf(
+            "image_path" to file.absolutePath,
+            "file_name" to file.nameWithoutExtension
+        )
+
+        val request = OneTimeWorkRequestBuilder<UploadImageWorker>()
+            .setInputData(data)
+            .build()
+
+        WorkManager.getInstance(context).enqueue(request)
+        return request.id
     }
 }

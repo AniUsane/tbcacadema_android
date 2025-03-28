@@ -1,11 +1,13 @@
 package com.example.tbcacademy.presentation.screen
 
 import android.content.Intent
+import android.graphics.Bitmap
 import androidx.lifecycle.viewModelScope
 import com.example.tbcacademy.BaseViewModel
 import com.example.tbcacademy.data.repository.UploadImageRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import java.util.UUID
 import javax.inject.Inject
 
 @HiltViewModel
@@ -14,6 +16,8 @@ class UploadImageViewModel @Inject constructor(
 ): BaseViewModel<UploadImageState, UploadImageEvent, UploadImageEffect>(
     initialState = UploadImageState.Idle
 ) {
+    private var lastUploadedId: UUID? = null
+
     //handles ui events and updates state
     override fun obtainEvent(event: UploadImageEvent) {
         when (event) {
@@ -21,6 +25,7 @@ class UploadImageViewModel @Inject constructor(
             is UploadImageEvent.OpenGallery -> updateState { UploadImageState.Idle }
             is UploadImageEvent.ImageCaptured -> handleCameraResult(event.data)
             is UploadImageEvent.ImageSelected -> handleGalleryResult(event.data)
+            is UploadImageEvent.UploadImage -> uploadSelectedImage(event.bitmap)
         }
 
     }
@@ -53,4 +58,10 @@ class UploadImageViewModel @Inject constructor(
             }
         }
     }
+
+    private fun uploadSelectedImage(bitmap: Bitmap){
+        updateState { UploadImageState.Loading }
+        lastUploadedId = repository.uploadImageWithWorker(bitmap)
+    }
+    fun getUploadWorkerId(): UUID? = lastUploadedId
 }

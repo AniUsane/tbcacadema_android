@@ -2,6 +2,7 @@ package com.example.tbcacademy.di
 
 import android.content.Context
 import com.example.tbcacademy.data.repository.UploadImageRepository
+import com.example.tbcacademy.domain.usecase.UploadImageToFirebaseUseCase
 import com.example.tbcacademy.domain.usecase.UploadImageUseCase
 import dagger.Module
 import dagger.Provides
@@ -22,9 +23,21 @@ class AppModule {
 
     @Provides
     @Singleton
-    fun provideUploadImageRepository(uploadImageUseCase: UploadImageUseCase,
-                                     @ApplicationContext context: Context
-    ): UploadImageRepository{
-        return UploadImageRepository(uploadImageUseCase, context)
+    fun provideUploadImageToFirebaseUseCase(): UploadImageToFirebaseUseCase {
+        return UploadImageToFirebaseUseCase()
+    }
+
+    @Provides
+    @Singleton
+    fun provideUploadImageRepository(
+        uploadImageUseCase: UploadImageUseCase,
+        uploadImageToFirebaseUseCase: UploadImageToFirebaseUseCase,
+        @ApplicationContext context: Context
+    ): UploadImageRepository {
+        return UploadImageRepository(
+            uploadImageUseCase,
+            uploadImageToFirebaseUseCase,
+            context
+        )
     }
 }

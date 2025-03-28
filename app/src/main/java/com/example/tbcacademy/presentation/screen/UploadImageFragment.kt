@@ -8,12 +8,15 @@ import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.work.WorkInfo
+import androidx.work.WorkManager
 import com.example.tbcacademy.BaseFragment
 import com.example.tbcacademy.databinding.FragmentUploadImageBinding
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import java.util.UUID
 
 @AndroidEntryPoint
 class UploadImageFragment : BaseFragment<FragmentUploadImageBinding>(FragmentUploadImageBinding::inflate) {
@@ -30,7 +33,40 @@ class UploadImageFragment : BaseFragment<FragmentUploadImageBinding>(FragmentUpl
             d("UploadImageFragment", "Add Image button clicked")
             showImagePicker()
         }
+
+        binding.uploadButton.setOnClickListener {
+            uploadImage()
+        }
     }
+
+    private fun uploadImage(){
+        val state = viewModel.viewState.value
+        if (state is UploadImageState.ImageLoaded) {
+            viewModel.obtainEvent(UploadImageEvent.UploadImage(state.bitmap))
+            observeWorker(viewModel.getUploadWorkerId())
+        } else {
+            showError("No image selected")
+        }
+    }
+
+    private fun observeWorker(workerId: UUID?) {
+        workerId ?: return
+        WorkManager.getInstance(requireContext())
+            .getWorkInfoByIdLiveData(workerId)
+            .observe(viewLifecycleOwner) { workInfo ->
+                if (workInfo != null && workInfo.state.isFinished) {
+                    hideLoading()
+                    if (workInfo.state == WorkInfo.State.SUCCEEDED) {
+                        showSuccess("Image uploaded successfully")
+                    } else {
+                        showError("Image upload failed")
+                    }
+                } else {
+                    showLoading()
+                }
+            }
+    }
+
 
     //shows bottom sheet fragment
     private fun showImagePicker(){
@@ -77,6 +113,7 @@ class UploadImageFragment : BaseFragment<FragmentUploadImageBinding>(FragmentUpl
             viewModel.effects.collectLatest { effect ->
                 when (effect) {
                     is UploadImageEffect.ShowError -> showError(effect.message)
+                    is UploadImageEffect.ShowSuccess -> showSuccess(effect.message)
                 }
             }
         }
@@ -120,6 +157,10 @@ class UploadImageFragment : BaseFragment<FragmentUploadImageBinding>(FragmentUpl
     }
 
     private fun showError(message: String){
+        Snackbar.make(binding.root, message, Snackbar.LENGTH_SHORT).show()
+    }
+
+    private fun showSuccess(message: String) {
         Snackbar.make(binding.root, message, Snackbar.LENGTH_SHORT).show()
     }
 

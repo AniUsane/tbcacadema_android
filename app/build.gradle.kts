@@ -70,7 +70,9 @@ dependencies {
     implementation(libs.firebase.messaging)
     implementation(platform("com.google.firebase:firebase-bom:33.11.0"))
     implementation("com.google.firebase:firebase-analytics")
-    implementation("com.google.firebase:firebase-crashlytics")
+    implementation("androidx.work:work-runtime-ktx:2.10.0")
+    implementation("com.google.firebase:firebase-storage-ktx")
+    implementation("androidx.hilt:hilt-work:1.2.0")
 
 }
 
