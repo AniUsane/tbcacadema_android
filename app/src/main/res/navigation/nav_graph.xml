@@ -3,7 +3,21 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/">
+    app:startDestination="@id/transferFragment">
 
 
+    <fragment
+        android:id="@+id/transferFragment"
+        android:name="com.example.tbcacademy.presentation.screen.ui.transfer.TransferFragment"
+        android:label="fragment_transfer"
+        tools:layout="@layout/fragment_transfer" >
+        <action
+            android:id="@+id/action_transferFragment_to_fromAccountBottomSheet"
+            app:destination="@id/fromAccountBottomSheet" />
+    </fragment>
+    <dialog
+        android:id="@+id/fromAccountBottomSheet"
+        android:name="com.example.tbcacademy.presentation.screen.ui.transfer.FromAccountBottomSheet"
+        android:label="fragment_from_account_bottom_sheet"
+        tools:layout="@layout/fragment_from_account_bottom_sheet" />
 </navigation>

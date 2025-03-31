@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:paddingHorizontal="30dp"
+    android:background="@color/backgroundColor"
+    tools:context=".presentation.screen.ui.transfer.TransferFragment">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/backBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/back_btn"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginTop="60dp"
+        />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/pageTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/transfer_internally"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:textAlignment="center"
+        android:layout_marginTop="50dp"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/fromLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/from"
+        android:textColor="@color/secondaryText"
+        android:textSize="14sp"
+        android:layout_marginTop="30dp"
+        android:layout_marginStart="30dp"
+        app:layout_constraintTop_toBottomOf="@+id/backBtn"
+        app:layout_constraintLeft_toLeftOf="parent"
+        />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/fromCard"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/card_background"
+        android:padding="16dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@id/fromLabel">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/cardType"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/visa_image"
+            android:background="@drawable/round_image"
+            android:scaleType="centerCrop"
+            android:clipToOutline="true"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/cashLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/cash"
+            android:textSize="16sp"
+            android:textColor="@color/grayText"
+            android:layout_marginStart="10dp"
+            app:layout_constraintTop_toTopOf="@+id/fromCard"
+            app:layout_constraintLeft_toRightOf="@+id/cardType"
+            />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/amountOfMoney"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:text="350 ₾"
+            android:textColor="@color/grayText"
+            app:layout_constraintTop_toBottomOf="@+id/cashLabel"
+            app:layout_constraintLeft_toRightOf="@+id/cardType"
+            />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/fromCardNumbers"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="**** 2345"
+            android:textColor="@color/grayText"
+            app:layout_constraintTop_toTopOf="@+id/fromCard"
+            app:layout_constraintBottom_toBottomOf="@+id/fromCard"
+            app:layout_constraintRight_toRightOf="parent"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/toLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/to"
+        android:textColor="@color/secondaryText"
+        android:textSize="14sp"
+        android:layout_marginTop="15dp"
+        android:layout_marginStart="30dp"
+        app:layout_constraintTop_toBottomOf="@+id/fromCard"
+        app:layout_constraintLeft_toLeftOf="parent"
+        />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/toCard"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/card_background"
+        android:padding="16dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@id/toLabel">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/toCardType"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/visa_image"
+            android:background="@drawable/round_image"
+            android:scaleType="centerCrop"
+            android:clipToOutline="true"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/toCashLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/cash"
+            android:textSize="16sp"
+            android:textColor="@color/grayText"
+            android:layout_marginStart="10dp"
+            app:layout_constraintTop_toTopOf="@+id/toCard"
+            app:layout_constraintLeft_toRightOf="@+id/toCardType"
+            />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/toAmountOfMoney"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:text="10 €"
+            android:textColor="@color/grayText"
+            app:layout_constraintTop_toBottomOf="@+id/toCashLabel"
+            app:layout_constraintLeft_toRightOf="@+id/toCardType"
+            />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/toCardNumbers"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="**** 2345"
+            android:textColor="@color/grayText"
+            app:layout_constraintTop_toTopOf="@+id/toCard"
+            app:layout_constraintBottom_toBottomOf="@+id/toCard"
+            app:layout_constraintRight_toRightOf="parent"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/sellContainer1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:padding="10dp"
+        android:layout_marginRight="15dp"
+        android:background="@drawable/sell_card_background"
+        app:layout_constraintTop_toBottomOf="@+id/toCard"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/sellContainer2"
+        >
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/sellLabel1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sell"
+            android:layout_marginEnd="10dp"
+            android:textColor="@color/grayText"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            />
+
+        <TextView
+            android:id="@+id/sellCurrency1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="350 ₾"
+            android:textColor="@color/white"
+            app:layout_constraintTop_toBottomOf="@+id/sellLabel1"
+            app:layout_constraintLeft_toLeftOf="parent"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/sellContainer2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:padding="10dp"
+        android:background="@drawable/sell_card_background"
+        app:layout_constraintTop_toBottomOf="@+id/toCard"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toRightOf="@+id/sellContainer1"
+        >
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/sellLabel2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sell"
+            android:layout_marginEnd="10dp"
+            android:textColor="@color/grayText"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            />
+
+        <TextView
+            android:id="@+id/sellCurrency2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="950 €"
+            android:textColor="@color/white"
+            app:layout_constraintTop_toBottomOf="@+id/sellLabel2"
+            app:layout_constraintLeft_toLeftOf="parent"
+            />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/currency"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Lorem Ipsum 1 \$ = 0.25 ₾ Lorem Ipsum is simply"
+        android:textColor="@color/currencyColor"
+        android:layout_marginTop="20dp"
+        android:textAlignment="center"
+        app:layout_constraintTop_toBottomOf="@+id/sellContainer1"
+        />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/descriptionContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:padding="10dp"
+        android:background="@drawable/sell_card_background"
+        app:layout_constraintTop_toBottomOf="@+id/currency"
+        >
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/descriptionLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/description"
+            android:textColor="@color/grayText"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/transfer_between_your_accounts"
+            android:textColor="#AFFFFFFF"
+            app:layout_constraintTop_toBottomOf="@+id/descriptionLabel"
+            app:layout_constraintLeft_toLeftOf="parent"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/continueBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/continue_txt"
+        android:textColor="#AFFFFFFF"
+        android:textAllCaps="false"
+        android:layout_marginBottom="50dp"
+        android:background="@drawable/button_background"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
+
+    <ProgressBar
+        android:id="@+id/loader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        />
+    
+</androidx.constraintlayout.widget.ConstraintLayout>

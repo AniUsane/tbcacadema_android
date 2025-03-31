@@ -2,6 +2,8 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     kotlin("plugin.serialization") version "2.0.21"
+    id("kotlin-kapt")
+    id("com.google.dagger.hilt.android")
 }
 
 android {
@@ -36,6 +38,22 @@ android {
     }
     buildFeatures{
         viewBinding = true
+        buildConfig = true
+
+        buildTypes {
+            debug {
+                buildConfigField("String", "BASE_URL", "\"https://run.mocky.io/v3/\"")
+            }
+            release {
+                buildConfigField("String", "BASE_URL", "")
+            }
+        }
+    }
+    packaging {
+        resources {
+            excludes += "/META-INF/{AL2.0,LGPL2.1}"
+        }
+        resources.excludes.add("META-INF/gradle/incremental.annotation.processors")
     }
 }
 
@@ -52,4 +70,12 @@ dependencies {
     implementation(libs.navigation.fragment)
     implementation(libs.navigation.ui)
     implementation(libs.serialization)
+
+    implementation(libs.okhttp)
+    implementation(libs.retrofit)
+    implementation(libs.retrofit2.kotlinx.serialization.converter)
+    implementation(libs.hilt.android)
+    implementation(libs.hilt.android.compiler)
+    kapt(libs.hilt.android.compiler)
+    implementation("androidx.hilt:hilt-navigation-fragment:1.1.0")
 }
