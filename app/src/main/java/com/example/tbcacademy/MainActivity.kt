@@ -1,20 +1,35 @@
 package com.example.tbcacademy
 
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import com.example.tbcacademy.databinding.ActivityMainBinding
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.compose.runtime.collectAsState
+import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.compose.rememberNavController
+import com.example.tbcacademy.presentation.ui.AppNavGraph
+import com.example.tbcacademy.presentation.viewmodel.LoginViewModel
+import com.example.tbcacademy.presentation.viewmodel.RegistrationViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import dagger.hilt.android.HiltAndroidApp
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityMainBinding
+class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        setContent {
+            val navController = rememberNavController()
+            val loginViewModel: LoginViewModel = ViewModelProvider(this)[LoginViewModel::class.java]
+            val loginState = loginViewModel.viewState.collectAsState()
+            val registrationViewModel = ViewModelProvider(this)[RegistrationViewModel::class.java]
+            val registerState = registrationViewModel.viewState.collectAsState()
+
+
+            AppNavGraph(navController = navController,
+                loginState = loginState.value,
+                loginEvent = loginViewModel::obtainEvent,
+                registrationEvent = registrationViewModel::obtainEvent,
+                registrationState = registerState.value,
+                loginEffectFlow = loginViewModel.effects)
+        }
+
     }
 }

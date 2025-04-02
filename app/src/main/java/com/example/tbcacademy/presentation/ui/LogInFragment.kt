@@ -55,7 +55,9 @@ class LogInFragment : BaseFragment<FragmentLogInBinding>(FragmentLogInBinding::i
                         hideLoading()
                         showSnackBar(state.message)
                     }
-                    LoginState.Idle -> hideLoading()
+                    is LoginState.Input -> {
+
+                    }
                 }
             }
         }

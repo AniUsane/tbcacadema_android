@@ -16,7 +16,7 @@ import javax.inject.Inject
 class RegistrationViewModel @Inject constructor(
     private val repository: RegisterRepository,
     private val validateRegistration: ValidateRegistrationUseCase
-) : BaseViewModel<RegisterState, RegisterEvent, RegisterEffect>(RegisterState.Idle) {
+) : BaseViewModel<RegisterState, RegisterEvent, RegisterEffect>(RegisterState.Input()) {
 
     private fun register(email: String, password: String, repeatedPassword: String) {
         val validationResult = validateRegistration(email, password, repeatedPassword)
@@ -46,8 +46,21 @@ class RegistrationViewModel @Inject constructor(
 
 
     override fun obtainEvent(event: RegisterEvent) {
+        val input = viewState.value as? RegisterState.Input ?: return
         when(event) {
             is RegisterEvent.SubmitRegistration -> register(event.email, event.password, event.repeatedPassword)
+            is RegisterEvent.EmailChanged -> {
+                updateState { input.copy(email = event.email) }
+            }
+            is RegisterEvent.UsernameChanged -> {
+                updateState { input.copy(username = event.username) }
+            }
+            is RegisterEvent.PasswordChanged -> {
+                updateState { input.copy(password = event.password) }
+            }
+            is RegisterEvent.RepeatedPasswordChanged -> {
+                updateState { input.copy(repeatedPassword = event.repeatedPassword) }
+            }
         }
     }
 

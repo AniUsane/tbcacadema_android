@@ -16,7 +16,7 @@ import javax.inject.Inject
 class LoginViewModel @Inject constructor(
     private val loginUseCase: LogInUseCase,
     private val repository: LoginRepository
-): BaseViewModel<LoginState, LoginEvent, LoginEffect>(LoginState.Idle) {
+): BaseViewModel<LoginState, LoginEvent, LoginEffect>(LoginState.Input()) {
 
 
     private fun checkRememberMe(){
@@ -52,9 +52,21 @@ class LoginViewModel @Inject constructor(
     }
 
     override fun obtainEvent(event: LoginEvent) {
+        val inputState = viewState.value as? LoginState.Input ?: return
+
         when(event) {
+
             is LoginEvent.SubmitLogin -> login(event.email, event.password, event.rememberMe)
             is LoginEvent.CheckRememberMe -> checkRememberMe()
+            is LoginEvent.EmailChanged -> {
+                updateState { inputState.copy(email = event.email) }
+            }
+            is LoginEvent.PasswordChanged -> {
+                updateState { inputState.copy(password = event.password) }
+            }
+            is LoginEvent.RememberMeChanged -> {
+                updateState { inputState.copy(isRememberMeChecked = event.isChecked) }
+            }
         }
     }
 
