@@ -19,7 +19,7 @@ class LoginViewModel @Inject constructor(
 ): BaseViewModel<LoginState, LoginEvent, LoginEffect>(LoginState.Input()) {
 
 
-    private fun checkRememberMe(){
+    fun checkRememberMe(){
         viewModelScope.launch {
             repository.getAuthToken().collect{ token ->
                 if(!token.isNullOrEmpty()){
@@ -76,15 +76,8 @@ class LoginViewModel @Inject constructor(
         }
     }
 
-    fun checkSession(){
-        viewModelScope.launch {
-            repository.getAuthToken().collect{ token ->
-                if(!token.isNullOrEmpty()){
-                    updateState { LoginState.Success(token) }
-                    emitEffect(LoginEffect.NavigateToProfile)
-                }
-            }
-        }
+    fun resetToInputState(){
+        updateState { LoginState.Input() }
     }
 
 }

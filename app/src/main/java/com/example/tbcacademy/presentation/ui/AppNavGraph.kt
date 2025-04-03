@@ -24,27 +24,18 @@ data object RegistrationDestination
 @Serializable
 data object ProfileDestination
 
+@Serializable
+data object HomeDestination
+
 @Composable
-fun AppNavGraph(navController: NavHostController,
-                loginState: LoginState,
-                loginEvent: (LoginEvent) -> Unit,
-                registrationState: RegisterState,
-                registrationEvent: (RegisterEvent) -> Unit,
-                loginEffectFlow: Flow<LoginEffect>
+fun AppNavGraph(navController: NavHostController
 ){
     NavHost(navController = navController, startDestination = LoginDestination){
         composable<LoginDestination> {
-            val effect = loginEffectFlow.collectAsState(initial = null)
-            LaunchedEffect(effect.value) {
-                if (effect.value is LoginEffect.NavigateToProfile) {
-                    navController.navigate(ProfileDestination)
-                }
-            }
-
-
             LoginScreen(
-                state = loginState,
-                onEvent = loginEvent,
+                navigateToHome = {
+                    navController.navigate(HomeDestination)
+                },
                 navigateToRegister = {
                     navController.navigate(RegistrationDestination)
                 }
@@ -52,16 +43,24 @@ fun AppNavGraph(navController: NavHostController,
         }
         composable<RegistrationDestination>{
             RegistrationScreen(
-                state = registrationState,
-                onEvent = registrationEvent,
                 navigateToLogin = {
                     navController.navigate(LoginDestination)
                 }
             )
         }
         composable<ProfileDestination> {
-            AndroidFragment(clazz = ProfileFragment::class.java)
+            ProfileScreen(
+                navigateToLogin = {
+                    navController.navigate(LoginDestination)
+            })
+        }
+
+        composable<HomeDestination> {
+            HomeScreen(
+                navigateToProfile = {
+                    navController.navigate(ProfileDestination)
+                }
+            )
         }
     }
-
 }

@@ -7,6 +7,7 @@ import com.example.tbcacademy.data.repository.RegisterRepository
 import com.example.tbcacademy.domain.usecase.ValidateRegistrationUseCase
 import com.example.tbcacademy.presentation.effect.RegisterEffect
 import com.example.tbcacademy.presentation.event.RegisterEvent
+import com.example.tbcacademy.presentation.state.LoginState
 import com.example.tbcacademy.presentation.state.RegisterState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -68,6 +69,10 @@ class RegistrationViewModel @Inject constructor(
         viewModelScope.launch {
             emitEffect(RegisterEffect.NavigateToLoginPage)
         }
+    }
+
+    fun resetToInputState(){
+        updateState { RegisterState.Input() }
     }
 
 }

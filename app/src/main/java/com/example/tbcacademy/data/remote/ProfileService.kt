@@ -14,5 +14,5 @@ interface ProfileService {
     suspend fun register(@Body registerRequest: Request): Response<RegisterResponse>
 
     @GET("users")
-    suspend fun getUsers(@Query("page") page: Int): Response<List<User>>
+    suspend fun getUsers(@Query("page") page: Int): Response<UserResponse>
 }
