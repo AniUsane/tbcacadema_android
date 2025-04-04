@@ -1,4 +1,4 @@
-package com.example.tbcacademy.presentation.ui.screens
+package com.example.tbcacademy.presentation.ui
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer

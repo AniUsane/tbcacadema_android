@@ -5,7 +5,7 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import com.example.tbcacademy.data.remote.ProfileService
 import com.example.tbcacademy.data.remote.User
-import com.example.tbcacademy.presentation.ui.screens.UserPagingSource
+import com.example.tbcacademy.presentation.ui.UserPagingSource
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
