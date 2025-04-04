@@ -1,4 +1,4 @@
-package com.example.tbcacademy.presentation.ui
+package com.example.tbcacademy.presentation.ui.screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Checkbox
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.SnackbarHost
 import androidx.compose.material.SnackbarHostState
@@ -35,37 +34,30 @@ import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.repeatOnLifecycle
 import com.example.tbcacademy.R
-import com.example.tbcacademy.presentation.effect.LoginEffect
-import com.example.tbcacademy.presentation.event.LoginEvent
-import com.example.tbcacademy.presentation.state.LoginState
+import com.example.tbcacademy.presentation.effect.RegisterEffect
+import com.example.tbcacademy.presentation.event.RegisterEvent
+import com.example.tbcacademy.presentation.state.RegisterState
 import com.example.tbcacademy.presentation.ui.components.StyledButton
 import com.example.tbcacademy.presentation.ui.components.StyledOutlinedTextField
 import com.example.tbcacademy.presentation.ui.themes.Black
-import com.example.tbcacademy.presentation.viewmodel.LoginViewModel
-
+import com.example.tbcacademy.presentation.viewmodel.RegistrationViewModel
 
 @Composable
-fun LoginScreen(
-    navigateToHome: () -> Unit,
-    navigateToRegister: () -> Unit
+fun RegistrationScreen(
+    navigateToLogin: () -> Unit
 ){
-
-    val viewModel: LoginViewModel = hiltViewModel()
+    val viewModel: RegistrationViewModel = hiltViewModel()
     val state by viewModel.viewState.collectAsStateWithLifecycle()
-    val lifecycle = LocalLifecycleOwner.current
     val snackBarHostState = remember {SnackbarHostState()}
-
-    LaunchedEffect(Unit) {
-        viewModel.checkRememberMe()
-    }
+    val lifecycle = LocalLifecycleOwner.current
 
     LaunchedEffect(lifecycle) {
         lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED){
             viewModel.effects.collect{ effect ->
-                when(effect){
-                    is LoginEffect.NavigateToProfile -> navigateToHome()
-                    is LoginEffect.NavigateToRegister -> navigateToRegister()
-                    is LoginEffect.ShowSnackBar -> {
+                when(effect) {
+                    is RegisterEffect.NavigateToLogin -> navigateToLogin()
+                    is RegisterEffect.NavigateToLoginPage -> navigateToLogin()
+                    is RegisterEffect.ShowSnackBar -> {
                         snackBarHostState.showSnackbar(effect.message)
                     }
                 }
@@ -73,49 +65,48 @@ fun LoginScreen(
         }
     }
 
-    if(state is LoginState.Loading){
+    if (state is RegisterState.Loading) {
         CircularProgressIndicator(modifier = Modifier.padding(top = 24.dp))
     }
+
     when (val currentState = state) {
-        is LoginState.Input -> {
+        is RegisterState.Input -> {
+
         }
 
-        is LoginState.Loading -> {
+        is RegisterState.Loading -> {
             CircularProgressIndicator(modifier = Modifier.fillMaxWidth().padding(16.dp))
         }
 
-        is LoginState.Error -> {
+        is RegisterState.Error -> {
             LaunchedEffect(currentState.message) {
                 snackBarHostState.showSnackbar(currentState.message)
                 viewModel.resetToInputState()
             }
         }
 
-        is LoginState.Success -> {
+        is RegisterState.Success -> {
+            // No UI — navigation is already handled via effect
         }
     }
 
-    val inputState = state as? LoginState.Input ?: LoginState.Input()
+    val inputState = state as? RegisterState.Input ?: RegisterState.Input()
+
 
     Column(modifier = Modifier
         .fillMaxSize()
         .background(Color.White),
         verticalArrangement = Arrangement.Top
-    ) {
-        Row(
-            modifier = Modifier
-        ){
-            Image(
-                painter = painterResource(R.drawable.top_round_design),
-                contentDescription = "top design image"
-            )
+    ){
+        Row {
+            Image(painter = painterResource(R.drawable.top_round_design),
+                contentDescription = "top design image")
         }
-
         Column(
             modifier = Modifier.fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally
-        ){
-            Text(text = stringResource(R.string.login_page_title),
+        ) {
+            Text(text = stringResource(R.string.register_page_title),
                 style = TextStyle(
                     color = Color.Black,
                     fontSize = 48.sp,
@@ -123,53 +114,50 @@ fun LoginScreen(
                 )
             )
             Image(
-                painter = painterResource(R.drawable.standing),
+                painter = painterResource(R.drawable.register_image),
                 contentDescription = "Login page image",
                 Modifier.padding(20.dp)
             )
-
             StyledOutlinedTextField(
                 value = inputState.email,
-                onValueChange = { viewModel.obtainEvent(LoginEvent.EmailChanged(it))},
+                onValueChange = {viewModel.obtainEvent(RegisterEvent.EmailChanged(it)) },
                 label = "Email",
             )
-
+            StyledOutlinedTextField(
+                value = inputState.username,
+                onValueChange = {viewModel.obtainEvent(RegisterEvent.UsernameChanged(it)) },
+                label = "Username",
+            )
             StyledOutlinedTextField(
                 value = inputState.password,
-                onValueChange = { viewModel.obtainEvent(LoginEvent.PasswordChanged(it))},
+                onValueChange = {viewModel.obtainEvent(RegisterEvent.PasswordChanged(it)) },
                 label = "Password",
-                modifier = Modifier.padding(top = 20.dp)
             )
-            Row(modifier = Modifier.fillMaxWidth()
-                .padding(horizontal = 30.dp),
-                horizontalArrangement = Arrangement.End,
-                verticalAlignment = Alignment.CenterVertically){
-                Checkbox(
-                    checked = inputState.isRememberMeChecked,
-                    onCheckedChange = { viewModel.obtainEvent(LoginEvent.RememberMeChanged(it)) }
-                )
-                Text(text = "Remember me",
-                    style = TextStyle(
-                        fontSize = 14.sp
-                    )
-                )
-            }
+            StyledOutlinedTextField(
+                value = inputState.repeatedPassword,
+                onValueChange = {viewModel.obtainEvent(RegisterEvent.RepeatedPasswordChanged(it)) },
+                label = "Repeat password",
+            )
             StyledButton(
-                text = stringResource(R.string.btn2_text),
+                text = stringResource(R.string.btn1_text),
                 modifier = Modifier.padding(top = 20.dp),
                 onClick = {
-                    viewModel.obtainEvent(LoginEvent.SubmitLogin(inputState.email, inputState.password, inputState.isRememberMeChecked))
+                    viewModel.obtainEvent(
+                        RegisterEvent.SubmitRegistration(
+                            email = inputState.email,
+                            password = inputState.password,
+                            repeatedPassword = inputState.repeatedPassword
+                        )
+                    )
                 }
             )
-            Text(
-                text = stringResource(R.string.don_t_have_an_account_register_now),
+            Text(stringResource(R.string.already_have_an_account_log_in),
                 style = TextStyle(
                     color = Black,
                     fontSize = 14.sp
                 ),
                 modifier = Modifier.padding(top = 15.dp)
-                    .clickable { navigateToRegister() }
-            )
+                    .clickable { navigateToLogin() })
         }
 
         SnackbarHost(
@@ -178,13 +166,12 @@ fun LoginScreen(
                 .fillMaxWidth()
                 .padding(16.dp)
         )
-    }
 
+    }
 }
 
 @Composable
 @Preview
-fun FirstComposableScreenPreview(){
-    LoginScreen(navigateToHome = {},
-        navigateToRegister = {})
+fun RegistrationScreenPreview(){
+    RegistrationScreen(navigateToLogin = {})
 }

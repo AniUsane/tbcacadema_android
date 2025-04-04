@@ -1,16 +1,14 @@
-package com.example.tbcacademy.presentation.ui
+package com.example.tbcacademy.presentation.ui.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.SnackbarHostState
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -32,7 +30,6 @@ import com.example.tbcacademy.presentation.event.ProfileEvent
 import com.example.tbcacademy.presentation.state.ProfileState
 import com.example.tbcacademy.presentation.ui.components.StyledButton
 import com.example.tbcacademy.presentation.viewmodel.ProfileViewModel
-import kotlinx.coroutines.flow.collect
 
 @Composable
 fun ProfileScreen(

@@ -5,7 +5,7 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import com.example.tbcacademy.data.remote.ProfileService
 import com.example.tbcacademy.data.remote.User
-import com.example.tbcacademy.presentation.ui.UserPagingSource
+import com.example.tbcacademy.presentation.ui.screens.UserPagingSource
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
@@ -20,7 +20,7 @@ class UserRepository @Inject constructor(
                 enablePlaceholders = false,
                 prefetchDistance = 2
             ),
-            pagingSourceFactory = {UserPagingSource(service)}
+            pagingSourceFactory = { UserPagingSource(service) }
         ).flow
     }
 

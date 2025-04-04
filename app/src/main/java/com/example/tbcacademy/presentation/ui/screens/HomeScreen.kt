@@ -1,4 +1,4 @@
-package com.example.tbcacademy.presentation.ui
+package com.example.tbcacademy.presentation.ui.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement

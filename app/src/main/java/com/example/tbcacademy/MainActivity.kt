@@ -4,7 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.navigation.compose.rememberNavController
-import com.example.tbcacademy.presentation.ui.AppNavGraph
+import com.example.tbcacademy.presentation.ui.navigation.AppNavGraph
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

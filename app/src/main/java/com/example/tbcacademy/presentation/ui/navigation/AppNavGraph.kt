@@ -1,18 +1,13 @@
-package com.example.tbcacademy.presentation.ui
+package com.example.tbcacademy.presentation.ui.navigation
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
-import androidx.fragment.compose.AndroidFragment
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.example.tbcacademy.presentation.effect.LoginEffect
-import com.example.tbcacademy.presentation.event.LoginEvent
-import com.example.tbcacademy.presentation.event.RegisterEvent
-import com.example.tbcacademy.presentation.state.LoginState
-import com.example.tbcacademy.presentation.state.RegisterState
-import kotlinx.coroutines.flow.Flow
+import com.example.tbcacademy.presentation.ui.screens.HomeScreen
+import com.example.tbcacademy.presentation.ui.screens.LoginScreen
+import com.example.tbcacademy.presentation.ui.screens.ProfileScreen
+import com.example.tbcacademy.presentation.ui.screens.RegistrationScreen
 import kotlinx.serialization.Serializable
 
 @Serializable
