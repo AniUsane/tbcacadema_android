@@ -1,5 +1,9 @@
 package com.example.tbcacademy.data.remote
 
+import com.example.tbcacademy.data.model.LoginResponse
+import com.example.tbcacademy.data.model.RegisterResponse
+import com.example.tbcacademy.data.model.Request
+import com.example.tbcacademy.data.model.UserResponse
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET

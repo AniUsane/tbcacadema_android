@@ -1,4 +1,4 @@
-package com.example.tbcacademy.data.remote
+package com.example.tbcacademy.data.remote.common
 
 import retrofit2.HttpException
 import retrofit2.Response

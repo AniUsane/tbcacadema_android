@@ -2,8 +2,8 @@ package com.example.tbcacademy.presentation.viewmodel
 
 import androidx.lifecycle.viewModelScope
 import com.example.tbcacademy.base.BaseViewModel
-import com.example.tbcacademy.data.remote.Resource
-import com.example.tbcacademy.data.repository.LoginRepository
+import com.example.tbcacademy.data.remote.common.Resource
+import com.example.tbcacademy.data.repository.LoginRepositoryImpl
 import com.example.tbcacademy.domain.usecase.LogInUseCase
 import com.example.tbcacademy.presentation.effect.LoginEffect
 import com.example.tbcacademy.presentation.event.LoginEvent
@@ -15,7 +15,7 @@ import javax.inject.Inject
 @HiltViewModel
 class LoginViewModel @Inject constructor(
     private val loginUseCase: LogInUseCase,
-    private val repository: LoginRepository
+    private val repository: LoginRepositoryImpl
 ): BaseViewModel<LoginState, LoginEvent, LoginEffect>(LoginState.Input()) {
 
 

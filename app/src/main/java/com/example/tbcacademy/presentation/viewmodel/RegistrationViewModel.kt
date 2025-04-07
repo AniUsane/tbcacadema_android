@@ -2,12 +2,11 @@ package com.example.tbcacademy.presentation.viewmodel
 
 import androidx.lifecycle.viewModelScope
 import com.example.tbcacademy.base.BaseViewModel
-import com.example.tbcacademy.data.remote.Resource
-import com.example.tbcacademy.data.repository.RegisterRepository
+import com.example.tbcacademy.data.remote.common.Resource
+import com.example.tbcacademy.data.repository.RegisterRepositoryImpl
 import com.example.tbcacademy.domain.usecase.ValidateRegistrationUseCase
 import com.example.tbcacademy.presentation.effect.RegisterEffect
 import com.example.tbcacademy.presentation.event.RegisterEvent
-import com.example.tbcacademy.presentation.state.LoginState
 import com.example.tbcacademy.presentation.state.RegisterState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -15,7 +14,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class RegistrationViewModel @Inject constructor(
-    private val repository: RegisterRepository,
+    private val repository: RegisterRepositoryImpl,
     private val validateRegistration: ValidateRegistrationUseCase
 ) : BaseViewModel<RegisterState, RegisterEvent, RegisterEffect>(RegisterState.Input()) {
 

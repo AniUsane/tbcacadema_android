@@ -8,10 +8,13 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material.Button
-import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.material.Text
+import androidx.compose.material3.Button
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableIntState
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -32,7 +35,8 @@ import com.example.tbcacademy.presentation.viewmodel.HomeViewModel
 
 @Composable
 fun HomeScreen(
-    navigateToProfile: () -> Unit
+    navigateToProfile: () -> Unit,
+    selectedIndex: MutableIntState
 ) {
 
     val viewModel: HomeViewModel = hiltViewModel()
@@ -56,14 +60,14 @@ fun HomeScreen(
             )
         )
 
-        Row(
-            modifier = Modifier.fillMaxWidth()
-                .padding(10.dp),
-            horizontalArrangement = Arrangement.End
-        ) {
-            Button(onClick = navigateToProfile) {
-                Text(text = stringResource(R.string.profile))
-            }
+        Button(onClick = {
+            selectedIndex.intValue = 1
+            navigateToProfile()
+        },
+            modifier = Modifier
+                .align(Alignment.End)
+                .padding(20.dp)) {
+            Text(text = stringResource(R.string.profile))
         }
 
         Text(
@@ -109,7 +113,9 @@ fun HomeScreen(
 @Composable
 @Preview
 fun HomeScreenPreview() {
+    val selectedIndex = rememberSaveable { mutableIntStateOf(0) }
     HomeScreen(
-        navigateToProfile = {}
+        navigateToProfile = {},
+        selectedIndex = selectedIndex
     )
 }

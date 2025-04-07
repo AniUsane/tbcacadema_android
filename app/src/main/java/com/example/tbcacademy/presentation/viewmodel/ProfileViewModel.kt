@@ -2,7 +2,7 @@ package com.example.tbcacademy.presentation.viewmodel
 
 import androidx.lifecycle.viewModelScope
 import com.example.tbcacademy.base.BaseViewModel
-import com.example.tbcacademy.data.repository.ProfileRepository
+import com.example.tbcacademy.data.repository.ProfileRepositoryImpl
 import com.example.tbcacademy.presentation.effect.ProfileEffect
 import com.example.tbcacademy.presentation.event.ProfileEvent
 import com.example.tbcacademy.presentation.state.ProfileState
@@ -12,7 +12,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ProfileViewModel @Inject constructor(
-    private val repository: ProfileRepository
+    private val repository: ProfileRepositoryImpl
 ): BaseViewModel<ProfileState, ProfileEvent, ProfileEffect>(ProfileState.Loading) {
     override fun obtainEvent(event: ProfileEvent) {
         when(event){

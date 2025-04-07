@@ -1,10 +1,10 @@
-package com.example.tbcacademy.data.remote
+package com.example.tbcacademy.data.model
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class User(
+data class UserDto(
     val id: Int,
     val email: String,
     @SerialName("first_name")

@@ -1,8 +1,9 @@
 package com.example.tbcacademy.domain.usecase
 
 import com.example.tbcacademy.data.local.datastore.DataStoreManager
-import com.example.tbcacademy.data.remote.Resource
-import com.example.tbcacademy.data.repository.LoginRepository
+import com.example.tbcacademy.data.remote.common.Resource
+import com.example.tbcacademy.data.repository.LoginRepositoryImpl
+import com.example.tbcacademy.domain.repository.LoginRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject

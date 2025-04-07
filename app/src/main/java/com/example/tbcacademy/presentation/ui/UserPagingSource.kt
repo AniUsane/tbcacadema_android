@@ -3,19 +3,19 @@ package com.example.tbcacademy.presentation.ui
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.example.tbcacademy.data.remote.ProfileService
-import com.example.tbcacademy.data.remote.User
+import com.example.tbcacademy.data.model.UserDto
 
 class UserPagingSource(
     private val service: ProfileService
-): PagingSource<Int, User>() {
-    override fun getRefreshKey(state: PagingState<Int, User>): Int? {
+): PagingSource<Int, UserDto>() {
+    override fun getRefreshKey(state: PagingState<Int, UserDto>): Int? {
         return state.anchorPosition?.let {
             state.closestPageToPosition(it)?.prevKey?.plus(1)
                 ?: state.closestPageToPosition(it)?.nextKey?.minus(1)
         }
     }
 
-    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, User> {
+    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, UserDto> {
         return try{
             val position = params.key ?: 1
             val response = service.getUsers(position)

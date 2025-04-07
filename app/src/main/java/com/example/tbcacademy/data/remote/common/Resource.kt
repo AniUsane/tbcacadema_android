@@ -1,4 +1,4 @@
-package com.example.tbcacademy.data.remote
+package com.example.tbcacademy.data.remote.common
 
 sealed class Resource<out T> {
     data class Success<out T>(val data: T): Resource<T>()

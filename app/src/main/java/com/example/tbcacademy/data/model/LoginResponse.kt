@@ -1,4 +1,4 @@
-package com.example.tbcacademy.data.remote
+package com.example.tbcacademy.data.model
 
 import kotlinx.serialization.Serializable
 

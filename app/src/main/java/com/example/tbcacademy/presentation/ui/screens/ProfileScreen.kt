@@ -66,7 +66,7 @@ fun ProfileScreen(
         verticalArrangement = Arrangement.SpaceEvenly,
         horizontalAlignment = Alignment.CenterHorizontally
     ){
-        Text(text = stringResource(R.string.login_page_title),
+        Text(text = stringResource(R.string.profile),
             style = TextStyle(
                 color = Color.Black,
                 fontSize = 48.sp,
